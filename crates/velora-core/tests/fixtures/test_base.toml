@@ -1,0 +1,33 @@
+# Test fixture: Base configuration
+
+[logging]
+level = "info"
+
+[database]
+backend = "questdb"
+
+[database.questdb]
+host = "localhost"
+pg_port = 8812
+http_port = 9000
+ilp_port = 9009
+database = "qdb"
+username = "admin"
+password = "quest"
+pool_size = 10
+
+[engine.backtest]
+initial_capital = 10000.0
+commission_rate = 0.001
+slippage_rate = 0.0001
+
+[engine.live]
+dry_run = true
+order_timeout_seconds = 30
+position_check_interval_ms = 1000
+
+[risk]
+max_position_size = 1000.0
+max_total_exposure = 10000.0
+max_drawdown_percent = 20.0
+max_daily_loss = 500.0

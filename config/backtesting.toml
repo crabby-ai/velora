@@ -1,0 +1,117 @@
+# Backtesting Configuration
+# Historical data analysis and strategy testing
+
+# Note: This config extends base.toml values.
+# Load order: base.toml -> backtesting.toml (this file overrides base)
+
+# ============================================================================
+# LOGGING - Moderate verbosity for backtest analysis
+# ============================================================================
+[logging]
+level = "info"  # Keep: Standard logging
+file = "logs/backtesting.log"
+
+# ============================================================================
+# DATABASE - QuestDB for fast historical queries
+# ============================================================================
+[database]
+backend = "questdb"  # Keep: QuestDB is optimized for time-series queries
+
+# QuestDB settings inherited from base.toml
+
+# ============================================================================
+# ENGINE - Backtest-specific settings
+# ============================================================================
+[engine.backtest]
+initial_capital = 10000.0  # Keep: Standard starting capital
+commission_rate = 0.001    # Keep: Realistic fees (0.1%)
+slippage_rate = 0.0001     # Keep: Realistic slippage (0.01%)
+
+# Additional backtest parameters (not in base)
+# Note: These would need to be added to the EngineConfig struct
+# [engine.backtest.advanced]
+# start_date = "2024-01-01"
+# end_date = "2024-12-31"
+# warmup_period_days = 30
+# data_frequency = "1m"  # 1-minute candles
+
+[engine.live]
+dry_run = true  # Not used in backtesting, but kept for safety
+order_timeout_seconds = 30
+position_check_interval_ms = 1000
+
+# ============================================================================
+# RISK - Historical risk parameters
+# ============================================================================
+[risk]
+max_position_size = 1000.0    # Keep: Standard limits
+max_total_exposure = 10000.0  # Keep: Standard limits
+max_drawdown_percent = 20.0   # Keep: Standard limits
+max_daily_loss = 500.0        # Keep: Standard limits
+
+# Test multiple position sizing strategies
+[risk.position_limits]
+"BTC/USD" = 5000.0
+"ETH/USD" = 3000.0
+
+# ============================================================================
+# EXCHANGES - Not used in backtesting (data from database)
+# ============================================================================
+# Backtesting uses historical data from the database
+# No live exchange connections needed
+
+# ============================================================================
+# BACKTESTING-SPECIFIC PARAMETERS
+# ============================================================================
+# [backtest]
+# # Data source
+# data_source = "database"  # or "csv", "parquet"
+# data_path = "data/historical/"
+#
+# # Time range
+# start_date = "2024-01-01T00:00:00Z"
+# end_date = "2024-12-31T23:59:59Z"
+#
+# # Execution
+# warmup_bars = 100
+# fill_model = "market"  # or "limit", "slippage"
+#
+# # Output
+# save_trades = true
+# save_equity_curve = true
+# output_dir = "backtest_results/"
+
+# ============================================================================
+# STRATEGY PARAMETERS FOR BACKTESTING
+# ============================================================================
+# Example strategies to test
+
+[strategy.moving_average_crossover]
+fast_period = 10
+slow_period = 30
+signal_threshold = 0.0
+
+[strategy.rsi_mean_reversion]
+rsi_period = 14
+oversold_threshold = 30
+overbought_threshold = 70
+exit_rsi = 50
+
+[strategy.bollinger_bands]
+period = 20
+std_dev = 2.0
+reversion_threshold = 0.5
+
+# ============================================================================
+# OPTIMIZATION PARAMETERS (Grid Search)
+# ============================================================================
+# [optimization]
+# method = "grid_search"  # or "random_search", "genetic_algorithm"
+#
+# [optimization.parameters]
+# fast_period = [5, 10, 15, 20]
+# slow_period = [20, 30, 40, 50]
+#
+# [optimization.metrics]
+# primary = "sharpe_ratio"
+# secondary = ["max_drawdown", "win_rate", "profit_factor"]

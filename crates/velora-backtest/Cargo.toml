@@ -1,0 +1,24 @@
+[package]
+name = "velora-backtest"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Backtesting engine for Velora trading strategies"
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+velora-core = { workspace = true }
+velora-data = { workspace = true }
+velora-strategy = { workspace = true }
+velora-risk = { workspace = true }
+
+async-trait = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+serde_json = { workspace = true }

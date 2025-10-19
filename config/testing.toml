@@ -1,0 +1,57 @@
+# Testing Configuration
+# This configuration is optimized for running tests and development
+
+# Note: This config extends base.toml values.
+# Load order: base.toml -> testing.toml (this file overrides base)
+
+# ============================================================================
+# LOGGING - Verbose for debugging
+# ============================================================================
+[logging]
+level = "debug"  # Override: More verbose than base (info)
+file = "logs/testing.log"
+
+# ============================================================================
+# DATABASE - Use in-memory for fast tests
+# ============================================================================
+[database]
+backend = "inmemory"  # Override: Use in-memory instead of QuestDB for speed
+
+# ============================================================================
+# ENGINE - Test-friendly settings
+# ============================================================================
+[engine.backtest]
+initial_capital = 1000.0  # Override: Smaller capital for testing
+commission_rate = 0.0     # Override: No fees for simpler test assertions
+slippage_rate = 0.0       # Override: No slippage for predictable tests
+
+[engine.live]
+dry_run = true            # Keep: Always dry-run in testing
+order_timeout_seconds = 5  # Override: Faster timeout for tests
+position_check_interval_ms = 100  # Override: Faster checks
+
+# ============================================================================
+# RISK - Relaxed limits for testing
+# ============================================================================
+[risk]
+max_position_size = 100.0   # Override: Smaller for tests
+max_total_exposure = 500.0  # Override: Smaller for tests
+max_drawdown_percent = 50.0 # Override: More lenient for tests
+max_daily_loss = 100.0      # Override: Smaller for tests
+
+# ============================================================================
+# EXCHANGES - Test exchange with mock credentials
+# ============================================================================
+[exchanges.binance_testnet]
+name = "binance"
+testnet = true  # Important: Use testnet
+rest_url = "https://testnet.binance.vision"
+ws_url = "wss://testnet.binance.vision/ws"
+
+[exchanges.binance_testnet.rate_limit]
+requests_per_second = 100  # Generous for testing
+orders_per_second = 50
+
+# Note: API keys should be set via environment variables:
+# VELORA_EXCHANGES_BINANCE_TESTNET_API_KEY=your_testnet_key
+# VELORA_EXCHANGES_BINANCE_TESTNET_API_SECRET=your_testnet_secret

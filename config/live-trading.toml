@@ -1,0 +1,96 @@
+# Live Trading Configuration
+# REAL MONEY - USE WITH EXTREME CAUTION
+
+# Note: This config extends base.toml values.
+# Load order: base.toml -> live-trading.toml (this file overrides base)
+
+# ⚠️  WARNING: This configuration executes REAL TRADES with REAL MONEY
+# ⚠️  Double-check all settings before running in production
+# ⚠️  Start with small position sizes and test thoroughly
+
+# ============================================================================
+# LOGGING - Maximum verbosity for production monitoring
+# ============================================================================
+[logging]
+level = "info"  # Production level logging
+file = "logs/live-trading.log"
+
+# ============================================================================
+# DATABASE - Production database (TimescaleDB for ACID guarantees)
+# ============================================================================
+[database]
+backend = "timescaledb"  # Override: Use TimescaleDB for production reliability
+
+# Production TimescaleDB settings
+[database.timescaledb]
+host = "localhost"  # Change to production host
+port = 5432
+database = "velora_production"
+username = "velora_prod"
+password = "CHANGE_ME_IN_PRODUCTION"  # Use env var: VELORA_DATABASE_TIMESCALEDB_PASSWORD
+pool_size = 20  # Larger pool for production
+ssl = true      # Enable SSL in production
+
+# ============================================================================
+# ENGINE - Production settings
+# ============================================================================
+[engine.backtest]
+# Not used in live trading, but kept for consistency
+initial_capital = 10000.0
+commission_rate = 0.001
+slippage_rate = 0.0001
+
+[engine.live]
+dry_run = false  # ⚠️  CRITICAL: Set to false for REAL trading
+order_timeout_seconds = 60     # Longer timeout for production
+position_check_interval_ms = 500  # Frequent checks
+
+# ============================================================================
+# RISK - STRICT production limits
+# ============================================================================
+[risk]
+max_position_size = 500.0     # Override: Conservative limit for production
+max_total_exposure = 5000.0   # Override: Conservative total exposure
+max_drawdown_percent = 10.0   # Override: Strict drawdown limit
+max_daily_loss = 200.0        # Override: Strict daily loss limit
+
+# Per-symbol position limits (strictly enforced)
+[risk.position_limits]
+"BTC/USD" = 2000.0
+"ETH/USD" = 1500.0
+"BNB/USD" = 800.0
+"SOL/USD" = 500.0
+
+# ============================================================================
+# EXCHANGES - Production exchange connections
+# ============================================================================
+[exchanges.binance_prod]
+name = "binance"
+testnet = false  # Production endpoint
+
+# Production rate limits (conservative)
+[exchanges.binance_prod.rate_limit]
+requests_per_second = 5   # Conservative to avoid bans
+orders_per_second = 3     # Conservative order rate
+
+# ⚠️  SECURITY: Never commit API keys to version control!
+# Set these via environment variables:
+# export VELORA_EXCHANGES_BINANCE_PROD_API_KEY="your_production_api_key"
+# export VELORA_EXCHANGES_BINANCE_PROD_API_SECRET="your_production_api_secret"
+
+# Optional: Add additional exchanges
+# [exchanges.coinbase_prod]
+# name = "coinbase"
+# testnet = false
+
+# ============================================================================
+# MONITORING & ALERTS (Future Implementation)
+# ============================================================================
+# [monitoring]
+# enable_alerts = true
+# alert_email = "alerts@yourdomain.com"
+# alert_slack_webhook = "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+
+# [monitoring.thresholds]
+# max_drawdown_alert = 5.0  # Alert at 5% drawdown
+# daily_loss_alert = 100.0  # Alert at $100 daily loss

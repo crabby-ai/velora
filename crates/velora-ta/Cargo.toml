@@ -1,0 +1,29 @@
+[package]
+name = "velora-ta"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Technical analysis indicators library for Velora - can be used standalone"
+keywords = ["trading", "technical-analysis", "indicators", "finance", "ta"]
+categories = ["finance", "algorithms"]
+
+[dependencies]
+async-trait = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
+velora-core = { workspace = true }
+tracing-subscriber = { workspace = true }
+
+[features]
+default = ["patterns", "williams", "statistical"]
+patterns = []
+williams = []
+statistical = []
+full = ["patterns", "williams", "statistical"]

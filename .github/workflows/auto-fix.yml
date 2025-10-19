@@ -1,0 +1,59 @@
+name: Auto-Fix Code Quality
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'crates/**/*.rs'
+      - 'Cargo.toml'
+      - 'crates/**/Cargo.toml'
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  auto-fix:
+    name: Auto-fix Formatting and Clippy Issues
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+
+      - name: Run cargo fmt
+        run: |
+          echo "Running cargo fmt..."
+          cargo fmt --all
+
+      - name: Run cargo clippy --fix
+        run: |
+          echo "Running cargo clippy --fix..."
+          cargo clippy --workspace --all-targets --all-features --fix --allow-dirty --allow-staged
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes needed"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Changes detected"
+          fi
+
+      - name: Commit fixes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: auto-fix formatting and clippy issues"
+          git push

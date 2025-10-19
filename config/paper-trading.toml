@@ -1,0 +1,77 @@
+# Paper Trading Configuration
+# Simulated trading with real market data but no actual orders
+
+# Note: This config extends base.toml values.
+# Load order: base.toml -> paper-trading.toml (this file overrides base)
+
+# ============================================================================
+# LOGGING - Production-like verbosity
+# ============================================================================
+[logging]
+level = "info"  # Keep: Same as base
+file = "logs/paper-trading.log"
+
+# ============================================================================
+# DATABASE - Use QuestDB for realistic performance
+# ============================================================================
+[database]
+backend = "questdb"  # Keep: Same as base for realistic testing
+
+# QuestDB settings inherited from base.toml
+# Override if you want different credentials for paper trading
+
+# ============================================================================
+# ENGINE - Paper trading specific
+# ============================================================================
+[engine.backtest]
+initial_capital = 10000.0  # Keep: Standard starting capital
+commission_rate = 0.001    # Keep: Realistic fees
+slippage_rate = 0.0001     # Keep: Realistic slippage
+
+[engine.live]
+dry_run = true  # CRITICAL: Always true for paper trading
+order_timeout_seconds = 30
+position_check_interval_ms = 1000
+
+# ============================================================================
+# RISK - Production-like limits
+# ============================================================================
+[risk]
+max_position_size = 1000.0    # Keep: Same as base
+max_total_exposure = 10000.0  # Keep: Same as base
+max_drawdown_percent = 20.0   # Keep: Same as base
+max_daily_loss = 500.0        # Keep: Same as base
+
+# Per-symbol limits for paper trading
+[risk.position_limits]
+"BTC/USD" = 5000.0
+"ETH/USD" = 3000.0
+"BNB/USD" = 2000.0
+
+# ============================================================================
+# EXCHANGES - Real exchange connections (paper mode)
+# ============================================================================
+[exchanges.binance]
+name = "binance"
+testnet = false  # Use real market data
+# Note: Even with real endpoints, orders won't execute due to dry_run=true
+
+[exchanges.binance.rate_limit]
+requests_per_second = 10  # Conservative for production API
+orders_per_second = 5     # Conservative for production API
+
+# API credentials via environment variables (optional for paper trading):
+# VELORA_EXCHANGES_BINANCE_API_KEY=your_api_key
+# VELORA_EXCHANGES_BINANCE_API_SECRET=your_api_secret
+
+# ============================================================================
+# STRATEGY-SPECIFIC SETTINGS (Example)
+# ============================================================================
+# Add your strategy parameters here
+# [strategy.momentum]
+# period = 14
+# threshold = 0.02
+
+# [strategy.mean_reversion]
+# window = 20
+# std_dev_multiplier = 2.0

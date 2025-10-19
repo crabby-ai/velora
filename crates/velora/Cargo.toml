@@ -1,0 +1,30 @@
+[package]
+name = "velora"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "High-Frequency Trading platform with data, exchange integration, and strategy execution"
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+velora-core = { workspace = true }
+velora-data = { workspace = true, optional = true }
+velora-exchange = { workspace = true, optional = true }
+velora-strategy = { workspace = true, optional = true }
+velora-backtest = { workspace = true, optional = true }
+velora-engine = { workspace = true, optional = true }
+velora-risk = { workspace = true, optional = true }
+
+[features]
+default = ["full"]
+full = ["data", "exchange", "strategy", "backtest", "engine", "risk"]
+data = ["dep:velora-data"]
+exchange = ["dep:velora-exchange"]
+strategy = ["dep:velora-strategy"]
+backtest = ["dep:velora-backtest", "strategy", "data", "risk"]
+engine = ["dep:velora-engine", "strategy", "exchange", "data", "risk"]
+risk = ["dep:velora-risk"]

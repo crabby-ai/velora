@@ -1,0 +1,11 @@
+# Test fixture: Override configuration
+
+[logging]
+level = "debug"  # Override from base
+
+[database]
+backend = "inmemory"  # Override from base
+
+[risk]
+max_position_size = 500.0  # Override from base
+# Other risk values inherited from base

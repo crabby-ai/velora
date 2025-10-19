@@ -1,0 +1,17 @@
+[package]
+name = "velora-risk"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Risk management for Velora"
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+velora-core = { workspace = true }
+
+serde = { workspace = true }
+chrono = { workspace = true }

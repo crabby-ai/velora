@@ -1,0 +1,27 @@
+[package]
+name = "velora-strategy"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Strategy framework and technical indicators for Velora"
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+velora-core = { workspace = true }
+velora-data = { workspace = true }
+velora-ta = { workspace = true }
+
+async-trait = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+velora-exchange = { workspace = true }
+tracing-subscriber = { workspace = true }

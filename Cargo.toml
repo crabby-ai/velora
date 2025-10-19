@@ -1,0 +1,87 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/velora-core",
+    "crates/velora-data",
+    "crates/velora-exchange",
+    "crates/velora-ta",
+    "crates/velora-strategy",
+    "crates/velora-backtest",
+    "crates/velora-engine",
+    "crates/velora-risk",
+    "crates/velora",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+authors = ["Velora Contributors"]
+license = "MIT"
+repository = "https://github.com/crabby-ai/velora"
+homepage = "https://github.com/crabby-ai/velora"
+keywords = ["trading", "hft", "cryptocurrency", "finance", "algorithmic-trading"]
+categories = ["finance", "algorithms"]
+
+[workspace.dependencies]
+velora-core = { version = "0.0.1", path = "crates/velora-core" }
+velora-data = { version = "0.0.1", path = "crates/velora-data" }
+velora-exchange = { version = "0.0.1", path = "crates/velora-exchange" }
+velora-ta = { version = "0.0.1", path = "crates/velora-ta" }
+velora-strategy = { version = "0.0.1", path = "crates/velora-strategy" }
+velora-backtest = { version = "0.0.1", path = "crates/velora-backtest" }
+velora-engine = { version = "0.0.1", path = "crates/velora-engine" }
+velora-risk = { version = "0.0.1", path = "crates/velora-risk" }
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+futures = "0.3"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+
+# HTTP & WebSocket
+reqwest = { version = "0.12", features = ["json"] }
+tokio-tungstenite = "0.23"
+url = "2"
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Data structures
+dashmap = "6"
+crossbeam = "0.8"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Config
+config = "0.14"
+gonfig = "0.1.7"
+gonfig_derive = "0.1.7"
+
+# Math & statistics
+ordered-float = "4"
+rust_decimal = "1.36"
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+# Utilities
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[profile.dev]
+opt-level = 0
+
+[profile.test]
+opt-level = 2
