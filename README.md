@@ -270,29 +270,49 @@ impl Strategy for SmaCrossover {
 
 ## Documentation
 
+### 📚 Main Documentation
+
+- **[Architecture Guide](ARCHITECTURE.md)** - Comprehensive technical architecture and design decisions
+- **[Roadmap](ROADMAP.md)** - Future plans, features, and development timeline
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute, code standards, and development workflow
 - **[High-Level Design](docs/LIVE_TRADING_ENGINE_HLD.md)** - Live trading engine architecture
+
+### 📖 Getting Started
+
 - **Examples** - See `examples/` directory in each crate
 - **API Docs** - Run `cargo doc --workspace --no-deps --open`
 
+### 📦 Crate Documentation
+
 Each crate has comprehensive documentation:
 
-- [velora-core](crates/velora-core/README.md)
-- [velora-data](crates/velora-data/README.md)
-- [velora-ta](crates/velora-ta/README.md)
-- [velora-strategy](crates/velora-strategy/README.md)
-- [velora-backtest](crates/velora-backtest/README.md)
-- [velora-engine](crates/velora-engine/README.md)
-- [velora-exchange](crates/velora-exchange/README.md)
+- [velora-core](crates/velora-core/README.md) - Core types and configuration
+- [velora-data](crates/velora-data/README.md) - Data management and sources
+- [velora-ta](crates/velora-ta/README.md) - Technical analysis indicators
+- [velora-strategy](crates/velora-strategy/README.md) - Strategy framework
+- [velora-backtest](crates/velora-backtest/README.md) - Backtesting engine
+- [velora-engine](crates/velora-engine/README.md) - Live trading engine
+- [velora-exchange](crates/velora-exchange/README.md) - Exchange integrations
 
 ## Contributing
 
-We welcome contributions! Here's how you can help:
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+**Quick Start**:
 
 1. **Check Issues**: Look for `good-first-issue` labels
 2. **Pick a Component**: Each crate can be developed independently
 3. **Write Tests**: Maintain high test coverage (aim for >80%)
 4. **Add Examples**: Show how to use new features
 5. **Update Docs**: Keep READMEs and API docs current
+
+**Priority Areas**:
+
+- Exchange integrations (Binance, Lighter, Paradex)
+- Strategy examples and tutorials
+- Documentation improvements
+- Performance optimizations
+- Test coverage expansion
 
 ## Technology Stack
 
@@ -326,6 +346,8 @@ This software is provided "as is" without warranty of any kind. The developers a
 
 ## Roadmap
 
+See [ROADMAP.md](ROADMAP.md) for the comprehensive development plan.
+
 ### Completed ✅
 
 - Core type system and error handling
@@ -335,20 +357,22 @@ This software is provided "as is" without warranty of any kind. The developers a
 - Backtesting engine with full metrics
 - Live trading engine with dry-run mode
 
-### In Progress 🚧
+### Current Focus 🚧
 
-- Exchange integrations (Lighter, Paradex)
+- Exchange integrations (Lighter, Paradex, Binance)
 - WebSocket market data streaming
 - Live order execution
+- Risk management system
 
-### Planned 📋
+### Next Phase 📋
 
-- CLI tool for strategy management
-- Web dashboard for monitoring
-- Additional exchanges (Binance, Coinbase)
-- Strategy optimization framework
+- Advanced order types (TWAP, VWAP, Iceberg)
+- Market making infrastructure
 - Machine learning integration
-- Portfolio management tools
+- Multi-strategy orchestration
+- High-availability deployment
+
+**Target**: v0.1.0 - Production-Ready Exchange Integrations (Q1 2025)
 
 ## License
 
