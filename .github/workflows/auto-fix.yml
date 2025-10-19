@@ -34,6 +34,8 @@ jobs:
           cargo fmt --all
 
       - name: Run cargo clippy --fix
+        env:
+          RUSTFLAGS: ''
         run: |
           echo "Running cargo clippy --fix..."
           cargo clippy --workspace --all-targets --all-features --fix --allow-dirty --allow-staged
