@@ -342,11 +342,12 @@ impl PositionTracker {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use velora_core::{OrderId, Side};
+
+    use velora_core::Side;
 
     fn create_fill(symbol: &str, side: Side, quantity: f64, price: f64) -> Fill {
         Fill {
-            order_id: OrderId::new(),
+            order_id: uuid::Uuid::new_v4(),
             symbol: symbol.to_string(),
             side,
             quantity,

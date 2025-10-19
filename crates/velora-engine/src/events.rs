@@ -117,7 +117,7 @@ mod tests {
     #[test]
     fn test_fill_total_cost_buy() {
         let fill = Fill {
-            order_id: OrderId::new(),
+            order_id: uuid::Uuid::new_v4(),
             symbol: "BTC-USD-PERP".to_string(),
             side: Side::Buy,
             quantity: 0.1,
@@ -133,7 +133,7 @@ mod tests {
     #[test]
     fn test_fill_total_cost_sell() {
         let fill = Fill {
-            order_id: OrderId::new(),
+            order_id: uuid::Uuid::new_v4(),
             symbol: "BTC-USD-PERP".to_string(),
             side: Side::Sell,
             quantity: 0.1,

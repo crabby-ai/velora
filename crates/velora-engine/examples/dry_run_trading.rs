@@ -60,7 +60,7 @@ impl Strategy for TestStrategy {
 
     async fn on_candle(
         &mut self,
-        candle: &Candle,
+        _candle: &Candle,
         _ctx: &StrategyContext,
     ) -> StrategyResult<Signal> {
         self.candle_count += 1;
