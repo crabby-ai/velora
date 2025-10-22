@@ -14,17 +14,26 @@ categories.workspace = true
 velora-core = { workspace = true }
 velora-data = { workspace = true, optional = true }
 velora-exchange = { workspace = true, optional = true }
+velora-ta = { workspace = true, optional = true }
 velora-strategy = { workspace = true, optional = true }
 velora-backtest = { workspace = true, optional = true }
 velora-engine = { workspace = true, optional = true }
 velora-risk = { workspace = true, optional = true }
 
+# Additional dependencies for integration utilities
+tokio = { workspace = true, optional = true }
+anyhow = { workspace = true, optional = true }
+tracing = { workspace = true, optional = true }
+tracing-subscriber = { workspace = true, optional = true }
+
 [features]
 default = ["full"]
-full = ["data", "exchange", "strategy", "backtest", "engine", "risk"]
+full = ["data", "exchange", "ta", "strategy", "backtest", "engine", "risk", "utils"]
 data = ["dep:velora-data"]
 exchange = ["dep:velora-exchange"]
-strategy = ["dep:velora-strategy"]
+ta = ["dep:velora-ta"]
+strategy = ["dep:velora-strategy", "ta"]
 backtest = ["dep:velora-backtest", "strategy", "data", "risk"]
 engine = ["dep:velora-engine", "strategy", "exchange", "data", "risk"]
 risk = ["dep:velora-risk"]
+utils = ["dep:tokio", "dep:anyhow", "dep:tracing", "dep:tracing-subscriber"]
